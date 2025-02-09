@@ -1,0 +1,42 @@
+[
+  {
+    "_id": "679a700fcce9b369940204be",
+    "title": "Original Vintage T9- Rechargeable Beard Trimmer For Men",
+    "image": "https://ibb.co/pdbQNMR",
+    "price": 63.38,
+    "ratings": 4.9,
+    "quantity": 15
+  },
+  {
+    "_id": "679a700fcce9b369940204bf",
+    "title": "Product 7",
+    "image": "https://via.placeholder.com/300x300?text=Product+7",
+    "price": 67.65,
+    "ratings": 2.9,
+    "quantity": 40
+  },
+  {
+    "_id": "679a700fcce9b369940204e0",
+    "title": "Product 40",
+    "image": "https://via.placeholder.com/300x300?text=Product+40",
+    "price": 85.98,
+    "ratings": 0.2,
+    "quantity": 47
+  },
+  {
+    "_id": "679a700fcce9b369940204e5",
+    "title": "Product 45",
+    "image": "https://via.placeholder.com/300x300?text=Product+45",
+    "price": 63.4,
+    "ratings": 1.8,
+    "quantity": 26
+  },
+  {
+    "_id": "679a700fcce9b369940204fe",
+    "title": "Product 70",
+    "image": "https://via.placeholder.com/300x300?text=Product+70",
+    "price": 34.3,
+    "ratings": 3.2,
+    "quantity": 25
+  }
+]
