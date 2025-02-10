@@ -5,7 +5,10 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
           {/* Company Info */}
           <div>
-            <h2 className="text-xl font-bold">ShopEase</h2>
+            <div className="text-2xl font-bold italic">
+              <span className="text-white">Daraz</span>
+              <span className="text-black">Like</span>
+            </div>
             <p className="mt-2 text-gray-400">
               Your one-stop destination for online shopping. Best deals & fast
               delivery!

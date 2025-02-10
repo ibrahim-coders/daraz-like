@@ -1,9 +1,11 @@
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { FiShoppingCart } from 'react-icons/fi';
 import { IoMenu } from 'react-icons/io5';
 import { FaPlus } from 'react-icons/fa6';
 import { useState } from 'react';
 import { IoIosSearch } from 'react-icons/io';
+import Login from '../../Authentication/Login';
+
 export default function Navbar() {
   const [isOpen, setOpen] = useState(false);
 
@@ -11,79 +13,82 @@ export default function Navbar() {
     setOpen(!isOpen);
   };
 
+  const navLinkStyles = ({ isActive }) =>
+    `p-3 block hover:text-gray-800  ${isActive ? 'text-white ' : ''}`;
+
   return (
-    <header className="bg-orange-400 shadow-md relative z-20 px-6">
-      <div className="container mx-auto ">
-        <nav className="flex justify-between items-center py-4 relative">
+    <header className="bg-orange-500 shadow-md relative z-20 px-4">
+      <div className="container mx-auto">
+        <nav className="flex justify-between items-center py-2 relative">
           {/* Brand logo */}
-          <div className="text-2xl font-bold italic">
-            <span className="text-emerald-600">Shop</span>
-            <span className="text-sky-600">Ease</span>
-          </div>
+          <Link to="/" className="text-2xl font-bold italic">
+            <span className="text-white">Daraz</span>
+            <span className="text-black">Like</span>
+          </Link>
 
           {/* Shopping Cart Icon */}
           <div className="flex items-center gap-4">
-            {/* navlinks */}
+            {/* Navigation Links */}
             <ul
               className={`${
                 isOpen ? 'block' : 'hidden'
-              } md:flex gap-6 items-center md:block absolute md:static top-14 left-0 w-full md:w-auto bg-white opacity-70 md:bg-transparent z-20 md:z-auto`}
+              } md:flex gap-6 items-center md:block absolute md:static top-14 left-0 w-full md:w-auto bg-white md:bg-transparent z-20 md:z-auto transition-all duration-300 ease-in-out`}
             >
-              <li>
-                <NavLink
-                  to="/"
-                  className={({ isActive }) =>
-                    isActive
-                      ? 'text-black text-xl px-6 py-4'
-                      : 'py-4 px-6 block text-xl hover:text-gray-800'
-                  }
-                >
+              {/* <li>
+                <NavLink to="/" className={navLinkStyles}>
                   Home
                 </NavLink>
-              </li>
+              </li> */}
               <li>
-                <NavLink
-                  to="/shop"
-                  className={({ isActive }) =>
-                    isActive
-                      ? 'text-black text-xl px-6 py-4'
-                      : 'py-4 px-6 block text-xl hover:text-gray-800'
-                  }
-                >
+                <NavLink to="/shop" className={navLinkStyles}>
                   Shop
                 </NavLink>
               </li>
               <li>
+                <NavLink to="/account" className={navLinkStyles}>
+                  BECOME A SELLER
+                </NavLink>
+              </li>
+              <li>
                 <NavLink
-                  className={({ isActive }) =>
-                    isActive
-                      ? 'text-black text-xl px-6 py-4'
-                      : 'py-4 px-6 block text-xl hover:text-gray-800'
+                  to="/login"
+                  onClick={() =>
+                    document.getElementById('my_modal_2').showModal()
                   }
+                  className="text-gray-700 p-3"
                 >
-                  Account
+                  LOGIN
                 </NavLink>
               </li>
             </ul>
-            <FiShoppingCart className="text-xl text-gray-900 cursor-pointer" />
+
+            {/* Shopping Cart Icon */}
+            <button aria-label="Shopping Cart">
+              <FiShoppingCart className="text-xl text-gray-900 cursor-pointer" />
+            </button>
 
             {/* Mobile Menu Toggle Icons */}
             <div className="block md:hidden">
-              <IoMenu
+              <button
                 onClick={handleMenu}
-                className={`text-2xl cursor-pointer ${
-                  isOpen ? 'hidden' : 'block'
-                } hover:text-gray-900 `}
-              />
-              <FaPlus
-                onClick={handleMenu}
-                className={`text-xl cursor-pointer ${
-                  isOpen ? 'block' : 'hidden'
-                } hover:text-gray-900 `}
-              />
+                aria-label="Toggle Menu"
+                className="hover:text-gray-900"
+              >
+                <IoMenu
+                  className={`text-2xl cursor-pointer ${
+                    isOpen ? 'hidden' : 'block'
+                  }`}
+                />
+                <FaPlus
+                  className={`text-xl cursor-pointer ${
+                    isOpen ? 'block' : 'hidden'
+                  }`}
+                />
+              </button>
             </div>
           </div>
         </nav>
+
         {/* Search Bar */}
         <div className="flex justify-center items-center gap-4 py-4">
           <div className="relative w-2/4">
@@ -92,11 +97,21 @@ export default function Navbar() {
               placeholder="Search for products"
               className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none bg-white text-gray-700 pr-10"
             />
-
-            <IoIosSearch className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500  text-2xl" />
+            <button aria-label="Search">
+              <IoIosSearch className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 text-2xl" />
+            </button>
           </div>
         </div>
       </div>
+
+      <dialog id="my_modal_2" className="modal">
+        <div className="modal-box">
+          <Login />
+        </div>
+        <form method="dialog" className="modal-backdrop">
+          <button>close</button>
+        </form>
+      </dialog>
     </header>
   );
 }
