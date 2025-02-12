@@ -11,11 +11,9 @@ app.use(express.json());
 
 // Connect to MongoDB
 
-// const url = 'mongodb://localhost:27017';
+// Create a MongoClient with a MongoClientOptions object to set the Stable API
 
-const uri = `mongodb://${process.env.NAME_KEY}:${process.env.SECRET_KEY}@cluster0.whh17.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
-
-// const uri = `mongodb+srv://${process.env.NAME_KEY}:${process.env.SECRET_KEY}@cluster0.whh17.mongodbnet/`;
+const uri = `mongodb+srv://${process.env.NAME_KEY}:${process.env.SECRET_KEY}@cluster0.whh17.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -39,7 +37,7 @@ async function run() {
     // API Endpoint to Get Products
     app.get('/products', async (req, res) => {
       const result = await productsCollection.find().toArray();
-      console.log('result', result);
+
       res.send(result);
     });
     console.log(

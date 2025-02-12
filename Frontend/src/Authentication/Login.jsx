@@ -1,13 +1,14 @@
+import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
+import { useContext } from 'react';
+import { AuthContext } from '../AuthContext/AuthProviters';
 
-import { Link } from 'react-router-dom';
-
-const Login = () => {
-  // const location = useLocation();
+const Login = ({ openRegisterModal }) => {
+  const { user } = useContext(AuthContext);
+  console.log(user);
   const validate = values => {
     const errors = {};
 
-    // Email validation
     if (!values.email) {
       errors.email = 'Email is required';
     } else if (
@@ -16,7 +17,6 @@ const Login = () => {
       errors.email = 'Invalid email address';
     }
 
-    // Password validation
     if (!values.password) {
       errors.password = 'Password is required';
     } else if (values.password.length < 6) {
@@ -44,13 +44,8 @@ const Login = () => {
   });
 
   return (
-    <div>
-      {/* Login Form */}
-      <form
-        onSubmit={formik.handleSubmit}
-        className="min-w-sm mx-auto max-w-md p-6 bg-white rounded-lg shadow-md"
-      >
-        {/* Email Field */}
+    <div className="min-w-sm mx-auto max-w-md  bg-white rounded-lg shadow-md mt-10 p-10">
+      <form onSubmit={formik.handleSubmit}>
         <div className="mb-4">
           <label
             htmlFor="email"
@@ -77,7 +72,6 @@ const Login = () => {
           )}
         </div>
 
-        {/* Password Field */}
         <div className="mb-6">
           <label
             htmlFor="password"
@@ -104,7 +98,6 @@ const Login = () => {
           )}
         </div>
 
-        {/* Submit Button */}
         <button
           type="submit"
           className="w-full bg-orange-500 py-2 px-4 text-white font-semibold rounded-md hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-400 transition-all duration-200"
@@ -113,16 +106,16 @@ const Login = () => {
         </button>
       </form>
 
-      {/* Signup Link */}
-      <p className="text-xl text-center text-gray-500 mt-4">
-        Don t have an account?{' '}
-        <Link to="/sign up" className="text-sky-500 hover:underline">
+      <p className="text-center text-gray-500 mt-4">
+        Dont have an account?{' '}
+        <button
+          onClick={openRegisterModal}
+          className="text-sky-500 hover:underline"
+        >
           Sign up
-        </Link>
-        {/* {location.pathname !== '/login' && <Login />} */}
+        </button>
       </p>
 
-      {/* Social Login */}
       <p className="py-2 text-center text-gray-500">Or, log in with</p>
       <div className="flex justify-center mt-2 items-center gap-2">
         <button className="flex items-center justify-center gap-3 w-full px-6 py-3 text-white bg-blue-600 rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300 transition duration-300">
@@ -136,6 +129,10 @@ const Login = () => {
       </div>
     </div>
   );
+};
+
+Login.propTypes = {
+  openRegisterModal: PropTypes.func,
 };
 
 export default Login;
