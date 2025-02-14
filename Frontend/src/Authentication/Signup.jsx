@@ -3,12 +3,22 @@ import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { CiRead, CiUnread } from 'react-icons/ci';
 import { AuthContext } from '../AuthContext/AuthProviters';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 const Signup = ({ openLoginModal }) => {
-  const { UserRegister } = useContext(AuthContext);
+  const {
+    UserRegister,
+    googleLoging,
+
+    updateUserProfiles,
+  } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [step, setStep] = useState(1);
+  const [errorMes, setErrorMess] = useState('');
+
+  const navigate = useNavigate();
 
   const {
     register,
@@ -18,13 +28,33 @@ const Signup = ({ openLoginModal }) => {
   } = useForm();
 
   const onSubmit = async data => {
+    console.log(data.image);
+
     try {
       const result = await UserRegister(data.email, data.password);
-      console.log(result.user); // Handle success
+      const photoURL = data.image;
+      await updateUserProfiles(data.firstName, photoURL);
+      toast.success('Account created successfully');
+      navigate('/');
+      console.log(result.user);
     } catch (error) {
-      console.log(error.message); // Handle error
+      if (error.code === 'auth/email-already-in-use') {
+        setErrorMess('Email already exists. Please try another email');
+      } else {
+        console.log(error.message);
+      }
     }
   };
+
+  const handleLogin = async () => {
+    try {
+      const result = await googleLoging();
+      console.log(result.user);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   return (
     <div className="min-w-sm mx-auto max-w-md p-6 bg-white rounded-lg shadow-md">
       <h2 className="text-center text-xl font-semibold text-gray-700">
@@ -82,11 +112,13 @@ const Signup = ({ openLoginModal }) => {
                 <input
                   type="file"
                   accept="image/*"
+                  name="image"
                   {...register('image', {
                     required: 'Profile image is required',
                   })}
                   className="w-full py-2 px-3 border border-orange-500 rounded-md"
                 />
+
                 {errors.image && (
                   <p className="text-red-500 text-sm">{errors.image.message}</p>
                 )}
@@ -179,7 +211,9 @@ const Signup = ({ openLoginModal }) => {
                 </p>
               )}
             </div>
-
+            {errorMes && (
+              <p className="text-red-500 text-sm py-2">{errorMes}</p>
+            )}
             {/* Submit Button */}
             <div className="w-full flex gap-4">
               <button
@@ -216,7 +250,10 @@ const Signup = ({ openLoginModal }) => {
       {/* Google Sign Up */}
       <p className="py-2 text-center text-gray-500">Or, sign up with</p>
       <div className="flex justify-center mt-2">
-        <button className="flex items-center gap-3 px-6 py-3 text-white bg-blue-600 rounded-lg shadow-md hover:bg-blue-700">
+        <button
+          onClick={handleLogin}
+          className="flex items-center gap-3 px-6 py-3 text-white bg-blue-600 rounded-lg shadow-md hover:bg-blue-700"
+        >
           <img
             className="w-6 h-6"
             src="https://img.icons8.com/?size=100&id=17949&format=png&color=000000"
