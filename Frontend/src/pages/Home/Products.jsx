@@ -6,13 +6,13 @@ const Products = () => {
   const { data: products, isLoading } = useQuery({
     queryKey: ['products'],
     queryFn: async () => {
-      const res = await fetch('producat.json');
+      const res = await fetch('http://localhost:5000/products');
       return res.json();
     },
   });
 
   if (isLoading) return <Spinner />;
-
+  console.log(products);
   return (
     <div>
       <div className="flex justify-between items-center py-4">
@@ -34,10 +34,7 @@ const Products = () => {
             <Link to={`/producat/${product._id}`} key={product._id}>
               <div className="card bg-base-100 w-72 hover:shadow-sm">
                 <figure>
-                  <img
-                    src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-                    alt={product.title}
-                  />
+                  <img src={product.photoUrl} alt={product.title} />
                 </figure>
                 <div className="card-body p-2">
                   <h3 className="text-lg font-semibold">{product.title}</h3>

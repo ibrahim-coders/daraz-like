@@ -1,12 +1,5 @@
-import CloudinaryUpload from '../../components/CloudinaryUpload';
-
 const Shop = () => {
-  return (
-    <div>
-      🛒 This is the Shop Page
-      <CloudinaryUpload />
-    </div>
-  );
+  return <div>🛒 This is the Shop Page</div>;
 };
 
 export default Shop;

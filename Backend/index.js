@@ -35,9 +35,17 @@ async function run() {
     const productsCollection = db.collection('products');
 
     // API Endpoint to Get Products
+    // get producats data
     app.get('/products', async (req, res) => {
       const result = await productsCollection.find().toArray();
+      res.send(result);
+    });
 
+    //post the database in producat
+    app.post('/producat', async (req, res) => {
+      const formData = req.body;
+      console.log('data', formData);
+      const result = await productsCollection.insertOne(formData);
       res.send(result);
     });
     console.log(
