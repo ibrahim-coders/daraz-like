@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { MdOutlineFileUpload } from 'react-icons/md';
-import { imageUpload } from '../../../components/CloudinaryUpload';
+
 import { useAuth } from '../../../CustomHooks/useAuth';
-import useAxiosPublicUrl from '../../../CustomHooks/useAxiosPublicUrl';
 import toast from 'react-hot-toast';
 import { FaSpinner } from 'react-icons/fa';
-const AddProducat = () => {
+import useAxiosPublicUrl from '../../../CustomHooks/useAxiosPublicUrl';
+import { imageUpload } from '../../../components/CloudinaryUpload';
+const ModelProducatUpadte = () => {
   const [file, setFile] = useState(null);
   const [imageError, setImageError] = useState('');
   const [spiner, setSpiner] = useState(false);
@@ -177,4 +178,4 @@ const AddProducat = () => {
   );
 };
 
-export default AddProducat;
+export default ModelProducatUpadte;

@@ -6,13 +6,12 @@ import { useEffect, useState } from 'react';
 const Dashboard = () => {
   const [isOpen, setOpen] = useState(true);
 
-  const location = useLocation(); // Detect route change
+  const location = useLocation();
 
-  // Close sidebar when the route changes
   useEffect(() => {
-    setOpen(false); // Auto-close sidebar when clicking a route
+    setOpen(false);
   }, [location]);
-  // Toggle function for sidebar
+
   const handleMenu = () => setOpen(!isOpen);
 
   return (
@@ -37,7 +36,7 @@ const Dashboard = () => {
 
         {/* Main content area */}
         <div
-          className={`flex-1 w-full min-h-[calc(100vh)] py-12 container mx-auto p-4 transition-all duration-300 ease-in-out ${
+          className={`flex-1 w-full min-h-[calc(100vh)] pb-12 container mx-auto p-4 transition-all duration-300 ease-in-out ${
             isOpen ? 'opacity-30' : ''
           }`}
         >

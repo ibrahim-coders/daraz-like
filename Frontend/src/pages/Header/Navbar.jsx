@@ -145,7 +145,7 @@ export default function Navbar() {
 
       <div className="container mx-auto">
         {showLogin && (
-          <div className="fixed inset-0 bg-opacity-50 flex justify-center items-center z-30">
+          <div className="fixed inset-0 bg-opacity-50 flex justify-center items-center z-30 mt-10">
             <Login openRegisterModal={openRegisterModal} />
           </div>
         )}

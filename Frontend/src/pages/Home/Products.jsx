@@ -1,13 +1,16 @@
 import { useQuery } from '@tanstack/react-query';
 import Spinner from '../../components/Spinner';
 import { Link } from 'react-router-dom';
+import useAxiosPublicUrl from '../../CustomHooks/useAxiosPublicUrl';
 
 const Products = () => {
+  const axiosPublic = useAxiosPublicUrl();
+
   const { data: products, isLoading } = useQuery({
     queryKey: ['products'],
     queryFn: async () => {
-      const res = await fetch('http://localhost:5000/products');
-      return res.json();
+      const res = await axiosPublic.get('/products');
+      return res.data.sort(() => Math.random() - 0.5);
     },
   });
 
@@ -26,14 +29,14 @@ const Products = () => {
       </div>
 
       {/* Render fetched products with 5% discount */}
-      <div className="grid grid-cols-4 gap-2">
+      <div className="w-full grid  grid-cols-1 md:grid-cols-2  lg:grid-cols-4 gap-2">
         {products?.map(product => {
-          const discountedPrice = (product.price * 0.95).toFixed(2); // Apply 5% discount
+          const discountedPrice = (product.price * 0.95).toFixed(2);
 
           return (
             <Link to={`/producat/${product._id}`} key={product._id}>
-              <div className="card bg-base-100 w-72 hover:shadow-sm">
-                <figure>
+              <div className="card bg-base-100 w-full hover:shadow-sm">
+                <figure className="w-full">
                   <img src={product.photoUrl} alt={product.title} />
                 </figure>
                 <div className="card-body p-2">
