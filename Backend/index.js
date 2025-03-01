@@ -13,7 +13,9 @@ app.use(express.json());
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API
 
-const uri = `mongodb+srv://${process.env.NAME_KEY}:${process.env.SECRET_KEY}@cluster0.whh17.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
+// const uri = `mongodb+srv://${process.env.NAME_KEY}:${process.env.SECRET_KEY}@cluster0.whh17.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
+
+const uri = 'mongodb://localhost:27017';
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -49,7 +51,13 @@ async function run() {
       const result = await productsCollection.find().toArray();
       res.send(result);
     });
-
+    //producat deteails
+    app.get('/products/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await productsCollection.findOne(query);
+      res.send(result);
+    });
     //get user pruducat
     app.get('/sellerproducat/:userEmail', async (req, res) => {
       const userEmail = req.params.userEmail;
