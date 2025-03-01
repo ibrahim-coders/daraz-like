@@ -128,12 +128,12 @@ export default function Navbar() {
               </div>
             </div>
           </nav>
-          <div className="flex justify-center items-center gap-4 py-4">
+          <div className="flex justify-center items-center gap-4 pb-4">
             <div className="relative w-2/4">
               <input
                 type="text"
                 placeholder="Search for products"
-                className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none bg-white text-gray-700 pr-10"
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none bg-white text-gray-700 pr-10"
               />
               <button aria-label="Search">
                 <IoIosSearch className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 text-2xl" />

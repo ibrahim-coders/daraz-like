@@ -7,17 +7,7 @@ import ModelProducatUpadte from './ModelProducatUpadte';
 
 const MyProducatsTable = ({ myProducat, refetch }) => {
   const axiosSecrectUrl = useAxiosSecretBaseUrl();
-  const {
-    product,
-    price,
-    photoUrl,
-    name,
-    _id,
-    brand,
-    discounted,
-    email,
-    quantity,
-  } = myProducat;
+  const { product, price, photoUrl, name, _id } = myProducat;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
   console.log(myProducat);
@@ -49,6 +39,8 @@ const MyProducatsTable = ({ myProducat, refetch }) => {
   //     console.log(error);
   //   }
   // };
+
+  const discountPrice = (price * 0.95).toFixed(2);
   return (
     <>
       <tr onClick={() => setIsEditMode(false)}>
@@ -61,7 +53,9 @@ const MyProducatsTable = ({ myProducat, refetch }) => {
         <td className="px-4 py-2 whitespace-nowrap text-gray-700">
           {product.slice(0, 20)}...
         </td>
-        <td className="px-4 py-2 whitespace-nowrap text-gray-700">{price}</td>
+        <td className="px-4 py-2 whitespace-nowrap text-gray-700">
+          {discountPrice}
+        </td>
         <td className="flex px-4 py-2 whitespace-nowrap text-gray-700 gap-4">
           <CiEdit
             className="cursor-pointer text-2xl"

@@ -10,12 +10,12 @@ const Products = () => {
     queryKey: ['products'],
     queryFn: async () => {
       const res = await axiosPublic.get('/products');
-      return res.data.sort(() => Math.random() - 0.5);
+      return res.data;
     },
   });
 
   if (isLoading) return <Spinner />;
-  console.log(products);
+
   return (
     <div>
       <div className="flex justify-between items-center py-4">
@@ -29,13 +29,13 @@ const Products = () => {
       </div>
 
       {/* Render fetched products with 5% discount */}
-      <div className="w-full grid  grid-cols-1 md:grid-cols-2  lg:grid-cols-4 gap-2">
+      <div className="w-full grid  grid-cols-2 md:grid-cols-3  lg:grid-cols-5 gap-2">
         {products?.map(product => {
           const discountedPrice = (product.price * 0.95).toFixed(2);
 
           return (
             <Link to={`/producat/${product._id}`} key={product._id}>
-              <div className="card bg-base-100 w-full hover:shadow-sm">
+              <div className="card bg-base-100 w-full  hover:shadow-2xl my-1.5">
                 <figure className="w-full">
                   <img src={product.photoUrl} alt={product.title} />
                 </figure>

@@ -4,9 +4,9 @@ import Footer from '../pages/Footer/Fotter';
 
 const MainLayout = () => {
   return (
-    <div className="max-w-7xl mx-auto px-4">
+    <div className=" ">
       <Navbar />
-      <div>
+      <div className="max-w-7xl mx-auto">
         <Outlet /> {/* ✅ শুধু Outlet থাকবে, Home থাকবে না */}
       </div>
       <Footer />
