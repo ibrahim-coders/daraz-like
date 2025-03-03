@@ -2,8 +2,8 @@ import { Link, NavLink } from 'react-router-dom';
 import { FiShoppingCart } from 'react-icons/fi';
 import { IoMenu } from 'react-icons/io5';
 import { FaPlus } from 'react-icons/fa6';
-import { useContext, useState } from 'react';
-import { IoIosSearch } from 'react-icons/io';
+import { useContext, useEffect, useRef, useState } from 'react';
+
 import Login from '../../Authentication/Login';
 import Signup from '../../Authentication/Signup';
 import { AuthContext } from '../../AuthContext/AuthProviters';
@@ -14,6 +14,7 @@ export default function Navbar() {
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
+  const modalRef = useRef(null);
   const { user, signOuts } = useContext(AuthContext);
 
   const handleMenu = () => setOpen(!isOpen);
@@ -41,6 +42,22 @@ export default function Navbar() {
     }
   };
 
+  const handleClickOutside = event => {
+    if (modalRef.current && !modalRef.current.contains(event.target)) {
+      setShowLogin(false);
+      setShowRegister(false);
+    }
+  };
+
+  useEffect(() => {
+    if (showLogin || showRegister) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [showLogin, showRegister]);
+
   return (
     <>
       <header className="bg-orange-500 shadow-md relative z-20 px-4">
@@ -56,6 +73,11 @@ export default function Navbar() {
                   isOpen ? 'block' : 'hidden'
                 } md:flex gap-6 items-center md:block absolute md:static top-14 left-0 w-full md:w-auto bg-white md:bg-transparent z-20 md:z-auto transition-all duration-300 ease-in-out`}
               >
+                <li>
+                  <NavLink to="/" className={navLinkStyles}>
+                    Home
+                  </NavLink>
+                </li>
                 <li>
                   <NavLink to="/shop" className={navLinkStyles}>
                     Shop
@@ -128,31 +150,29 @@ export default function Navbar() {
               </div>
             </div>
           </nav>
-          <div className="flex justify-center items-center gap-4 pb-4">
-            <div className="relative w-2/4">
-              <input
-                type="text"
-                placeholder="Search for products"
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none bg-white text-gray-700 pr-10"
-              />
-              <button aria-label="Search">
-                <IoIosSearch className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 text-2xl" />
-              </button>
-            </div>
-          </div>
         </div>
       </header>
 
       <div className="container mx-auto">
         {showLogin && (
-          <div className="fixed inset-0 bg-opacity-50 flex justify-center items-center z-30 mt-10">
-            <Login openRegisterModal={openRegisterModal} />
+          <div className="fixed inset-0  flex justify-center items-center z-30">
+            <div ref={modalRef} className="">
+              <Login
+                openRegisterModal={openRegisterModal}
+                setShowLogin={setShowLogin}
+              />
+            </div>
           </div>
         )}
 
         {showRegister && (
-          <div className="fixed inset-0 bg-opacity-50 flex justify-center items-center z-30">
-            <Signup openLoginModal={openLoginModal} />
+          <div className="fixed inset-0 flex justify-center items-center z-30">
+            <div ref={modalRef}>
+              <Signup
+                openLoginModal={openLoginModal}
+                setShowRegister={setShowRegister}
+              />
+            </div>
           </div>
         )}
       </div>

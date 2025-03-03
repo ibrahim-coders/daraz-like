@@ -6,7 +6,7 @@ import { AuthContext } from '../AuthContext/AuthProviters';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
-const Signup = ({ openLoginModal }) => {
+const Signup = ({ openLoginModal, setShowRegister }) => {
   const {
     UserRegister,
     googleLoging,
@@ -32,9 +32,11 @@ const Signup = ({ openLoginModal }) => {
 
     try {
       const result = await UserRegister(data.email, data.password);
+      setShowRegister(false);
+      toast.success('Account created successfully');
       const photoURL = data.image;
       await updateUserProfiles(data.firstName, photoURL);
-      toast.success('Account created successfully');
+
       navigate('/');
       console.log(result.user);
     } catch (error) {
@@ -219,12 +221,12 @@ const Signup = ({ openLoginModal }) => {
               <button
                 type="button"
                 onClick={() => setStep(1)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-100"
+                className="w-full px-4 py-2 border border-gray-300 bg-blue-600 rounded-md hover:bg-blue-700 text-white transition-all"
               >
                 Back
               </button>
 
-              <button>
+              <button className="w-full">
                 <input
                   type="submit"
                   value="Sign Up"
@@ -268,6 +270,7 @@ const Signup = ({ openLoginModal }) => {
 
 Signup.propTypes = {
   openLoginModal: PropTypes.func.isRequired,
+  setShowRegister: PropTypes.func,
 };
 
 export default Signup;
