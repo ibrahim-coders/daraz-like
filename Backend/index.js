@@ -48,7 +48,10 @@ async function run() {
     });
     // get producats data
     app.get('/products', async (req, res) => {
-      const result = await productsCollection.find().toArray();
+      const query = req.query.search || '';
+      const result = await productsCollection
+        .find({ product: { $regex: query, $options: 'i' } })
+        .toArray();
       res.send(result);
     });
     //producat deteails
